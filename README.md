@@ -10,6 +10,10 @@ focuses on type safety, performance and immutability.
   * [Custom Types And Structs](#custom-types-and-structs)
   * [Limiting Functions Generated](#limiting-functions-generated)
 - [Functions](#functions)
+  * [AreSorted() bool](#aresorted---bool)
+  * [AreUnique() bool](#areunique---bool)
+  * [Average() float64](#average---float64)
+  * [Contains(lookingFor ElementType) bool](#contains-lookingfor-elementtype--bool)
 - [FAQ](#faq)
   * [What are the requirements?](#what-are-the-requirements-)
   * [What are the goals of `pie`?](#what-are-the-goals-of--pie--)
@@ -121,7 +125,7 @@ This will only generate `myInts.Average`, `myInts.Sum` and `myStrings.Only`.
 | Function     | String | Number | Struct | Big-O    | Description |
 | ------------ | :----: | :----: | :----: | :------: | ----------- |
 | `AreSorted`  | ✓      | ✓      |        | n        | Check if the slice is already sorted. |
-| `AreUnique`  | ✓      | ✓      |        | n        | Check if the slice contains only unique elements. |
+| `AreUnique`  | ✓      | ✓      |        | n⋅log(n) | Check if the slice contains only unique elements. |
 | `Average`    |        | ✓      |        | n        | The average (mean) value, or a zeroed value. |
 | `Contains`   | ✓      | ✓      | ✓      | n        | Check if the value exists in the slice. |
 | `First`      | ✓      | ✓      | ✓      | 1        | The first element, or a zeroed value. |
@@ -139,6 +143,26 @@ This will only generate `myInts.Average`, `myInts.Sum` and `myStrings.Only`.
 | `Transform`  | ✓      | ✓      | ✓      | n        | A new slice where each element has been transformed. |
 | `Unique`     | ✓      | ✓      |        | n⋅log(n) | Return a new slice with only unique elements. |
 | `Without`    | ✓      | ✓      | ✓      | n        | A new slice containing only the elements that returned false from the condition. |
+
+## AreSorted() bool
+
+AreSorted will return true if the slice is already sorted. It is a wrapper for
+`sort.SliceTypeAreSorted`.
+
+## AreUnique() bool
+
+AreUnique will return true if the slice contains elements that are all different
+(unique) from each other.
+
+## Average() float64
+
+Average is the average of all of the elements, or zero if there are no elements.
+
+## Contains(lookingFor ElementType) bool
+
+Contains returns true if the element exists in the slice.
+
+When using slices of pointers it will only compare by address, not value.
 
 # FAQ
 
